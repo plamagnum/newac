@@ -12,10 +12,22 @@
     </header>
     <div class="container">
         <div class="left-column">
-            <p>Left Column</p>
+            <h2>Upload XML File</h2>
+            <form action="process.php" method="post" enctype="multipart/form-data">
+                <input type="file" name="xmlfile" accept=".xml" required>
+                <button type="submit">Upload</button>
+            </form>
         </div>
         <div class="right-column">
-            <p>Right Column</p>
+            <h2>XML File Content</h2>
+            <?php
+            if (isset($_GET['success']) && $_GET['success'] == 1 && file_exists('uploaded.xml')) {
+                $xml = simplexml_load_file('uploaded.xml');
+                echo '<pre>';
+                print_r($xml);
+                echo '</pre>';
+            }
+            ?>
         </div>
     </div>
     <footer>
