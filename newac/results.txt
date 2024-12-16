@@ -1,0 +1,8 @@
+Host: lib.khnu.km.ua, Port: 80/tcp, State: open, Service: http, Product: nginx
+Host: lib.khnu.km.ua, Port: 113/tcp, State: closed, Service: ident, Product: 
+Host: lib.khnu.km.ua, Port: 443/tcp, State: open, Service: http, Product: nginx
+Host: lib.khnu.km.ua, Port: 3389/tcp, State: open, Service: ms-wbt-server, Product: Microsoft Terminal Service
+Host: lib.khnu.km.ua, Port: 3551/tcp, State: closed, Service: apcupsd, Product: 
+Host: lib.khnu.km.ua, Port: 8080/tcp, State: open, Service: http, Product: nginx
+Host: lib.khnu.km.ua, Port: 8085/tcp, State: open, Service: unknown, Product: 
+Host: lib.khnu.km.ua, Port: 10000/tcp, State: open, Service: snet-sensor-mgmt, Product: 
