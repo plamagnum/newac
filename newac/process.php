@@ -23,6 +23,10 @@ if (isset($_GET['success']) && $_GET['success'] == 1 && file_exists('uploaded.xm
         $results[] = "$portid/$protocol  $state   $service     $product";
     }
 
-    file_put_contents('results.txt', implode("\n", $results));
+    $resultsFile = $uploadDir . '/results.txt';
+    if (file_put_contents($resultsFile, implode("\n", $results)) === false) {
+        echo 'Failed to write results to file!';
+    }
 }
+
 ?>

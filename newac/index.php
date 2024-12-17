@@ -24,6 +24,11 @@
             if (isset($_GET['success']) && $_GET['success'] == 1 && file_exists('results.txt')) {
                 echo nl2br(file_get_contents('results.txt'));
             }
+            /*$xml = simplexml_load_file('uploaded.xml');
+                echo '<pre>';
+                print_r($xml);
+                echo '</pre>';
+            */    
             ?>
         </div>
     </div>
