@@ -25,8 +25,26 @@ function insertScanResult($hostname, $portid, $protocol, $state, $service, $prod
 
 function getScanResults() {
     $dbConn = getDbConnection();
-    $query = "SELECT * FROM scan_results";
+    $query = "SELECT DISTINCT hostname FROM scan_results";
     $result = $dbConn->query($query);
+    $results = [];
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $results[] = $row['hostname'];
+        }
+    }
+
+    $dbConn->close();
+    return $results;
+}
+
+function getHostResults($hostname) {
+    $dbConn = getDbConnection();
+    $stmt = $dbConn->prepare("SELECT * FROM scan_results WHERE hostname = ?");
+    $stmt->bind_param('s', $hostname);
+    $stmt->execute();
+    $result = $stmt->get_result();
     $results = [];
 
     if ($result->num_rows > 0) {
@@ -35,6 +53,7 @@ function getScanResults() {
         }
     }
 
+    $stmt->close();
     $dbConn->close();
     return $results;
 }

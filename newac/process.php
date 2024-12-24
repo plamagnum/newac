@@ -5,10 +5,11 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['xmlfile'])) {
     $uploadDir = __DIR__;
-    $uploadFile = $uploadDir . '/uploaded.xml';
+    $randomPrefix = mt_rand(1000, 9999); // Генерація рандомного числового значення
+    $uploadFile = $uploadDir . '/' . $randomPrefix . '_uploaded.xml';
 
     if (move_uploaded_file($_FILES['xmlfile']['tmp_name'], $uploadFile)) {
-        $xml = simplexml_load_file('uploaded.xml');
+        $xml = simplexml_load_file($uploadFile);
         $results = [];
 
         foreach ($xml->host as $host) {

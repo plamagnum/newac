@@ -1,8 +1,15 @@
-Host: lib.khnu.km.ua, Port: 80/tcp, State: open, Service: http, Product: nginx
-Host: lib.khnu.km.ua, Port: 113/tcp, State: closed, Service: ident, Product: 
-Host: lib.khnu.km.ua, Port: 443/tcp, State: open, Service: http, Product: nginx
-Host: lib.khnu.km.ua, Port: 3389/tcp, State: open, Service: ms-wbt-server, Product: Microsoft Terminal Service
-Host: lib.khnu.km.ua, Port: 3551/tcp, State: closed, Service: apcupsd, Product: 
-Host: lib.khnu.km.ua, Port: 8080/tcp, State: open, Service: http, Product: nginx
-Host: lib.khnu.km.ua, Port: 8085/tcp, State: open, Service: unknown, Product: 
-Host: lib.khnu.km.ua, Port: 10000/tcp, State: open, Service: snet-sensor-mgmt, Product: 
+Host: 3v3.com.ua, Port: 22/tcp, State: open, Service: ssh, Product: OpenSSH
+Host: 3v3.com.ua, Port: 25/tcp, State: open, Service: smtp, Product: Exim smtpd
+Host: 3v3.com.ua, Port: 53/tcp, State: open, Service: domain, Product: ISC BIND
+Host: 3v3.com.ua, Port: 80/tcp, State: open, Service: http, Product: Apache httpd
+Host: 3v3.com.ua, Port: 110/tcp, State: open, Service: pop3, Product: Dovecot pop3d
+Host: 3v3.com.ua, Port: 111/tcp, State: open, Service: rpcbind, Product: 
+Host: 3v3.com.ua, Port: 139/tcp, State: filtered, Service: netbios-ssn, Product: 
+Host: 3v3.com.ua, Port: 143/tcp, State: open, Service: imap, Product: Dovecot imapd
+Host: 3v3.com.ua, Port: 443/tcp, State: open, Service: http, Product: Apache httpd
+Host: 3v3.com.ua, Port: 465/tcp, State: open, Service: smtps, Product: 
+Host: 3v3.com.ua, Port: 587/tcp, State: open, Service: smtp, Product: Exim smtpd
+Host: 3v3.com.ua, Port: 993/tcp, State: open, Service: imaps, Product: 
+Host: 3v3.com.ua, Port: 995/tcp, State: open, Service: pop3s, Product: 
+Host: 3v3.com.ua, Port: 1500/tcp, State: open, Service: http, Product: ISPmanager SSL redirector
+Host: 3v3.com.ua, Port: 3306/tcp, State: open, Service: mysql, Product: MySQL

@@ -1,35 +1,47 @@
+<?php
+require_once 'function.php';
+
+$results = getScanResults();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple PHP Website</title>
+    <title>Scan Results</title>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
     <header>
-        <h1>Header</h1>
+        <h1>Scan Results</h1>
     </header>
     <div class="container">
+        <!-- Ліва колонка з формою для завантаження XML файлів -->
         <div class="left-column">
-            <h2>Upload XML File</h2>
             <form action="process.php" method="post" enctype="multipart/form-data">
-                <input type="file" name="xmlfile" accept=".xml" required>
+                <label for="xmlfile">Upload XML file:</label>
+                <input type="file" name="xmlfile" id="xmlfile" required>
                 <button type="submit">Upload</button>
             </form>
+
+            <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+                <p>File uploaded and processed successfully!</p>
+            <?php endif; ?>
         </div>
+
+        <!-- Права колонка з результатами сканування -->
         <div class="right-column">
-            <h2>XML File Content</h2>
+            <ul>
             <?php
-            if (isset($_GET['success']) && $_GET['success'] == 1 && file_exists('results.txt')) {
-                echo nl2br(file_get_contents('results.txt'));
+            if (!empty($results)) {
+                foreach ($results as $hostname) {
+                    echo "<li><a href='view_result.php?hostname={$hostname}'>{$hostname}</a></li>";
+                }
+            } else {
+                echo "<li>No results found</li>";
             }
-            /*$xml = simplexml_load_file('uploaded.xml');
-                echo '<pre>';
-                print_r($xml);
-                echo '</pre>';
-            */    
             ?>
+            </ul>
         </div>
     </div>
     <footer>

@@ -1,26 +1,25 @@
 <?php
 require_once 'function.php';
 
-$results = getScanResults();
+$hostname = $_GET['hostname'];
+$results = getHostResults($hostname);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scan Results</title>
+    <title>Host Results: <?php echo htmlspecialchars($hostname); ?></title>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
     <header>
-        <h1>Scan Results</h1>
+        <h1>Results for Host: <?php echo htmlspecialchars($hostname); ?></h1>
     </header>
     <div class="container">
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Hostname</th>
                     <th>Port ID</th>
                     <th>Protocol</th>
                     <th>State</th>
@@ -33,8 +32,6 @@ $results = getScanResults();
                 if (!empty($results)) {
                     foreach ($results as $row) {
                         echo "<tr>
-                                <td>{$row['id']}</td>
-                                <td>{$row['hostname']}</td>
                                 <td>{$row['portid']}</td>
                                 <td>{$row['protocol']}</td>
                                 <td>{$row['state']}</td>
@@ -43,7 +40,7 @@ $results = getScanResults();
                               </tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='7'>No results found</td></tr>";
+                    echo "<tr><td colspan='5'>No results found for host: " . htmlspecialchars($hostname) . "</td></tr>";
                 }
                 ?>
             </tbody>
