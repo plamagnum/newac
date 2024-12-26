@@ -20,19 +20,35 @@ header, footer {
 
 .container {
     display: flex;
-    flex: 1; /* This makes the container take up the remaining space */
+    justify-content: space-between;
+    min-height: calc(100vh - 100px);
 }
 
 .left-column {
-    flex: 1;
-    background-color: #f4f4f4;
+    width: 30%;
     padding: 20px;
+    background-color: #f4f4f4;
+    box-sizing: border-box;
 }
 
 .right-column {
-    flex: 3;
-    background-color: #e4e4e4;
+    width: 65%;
     padding: 20px;
+    box-sizing: border-box; 
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
 }
 
 footer {
