@@ -3,10 +3,34 @@
 <head>
     <title>Адмін-панель</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <!--<link rel="stylesheet" type="text/css" href="styles/styles.css">-->
+    <link id="themeStylesheet" rel="stylesheet" type="text/css" href="styles/styles.css">
+    <script>
+        function changeTheme(theme) {
+            document.getElementById('themeStylesheet').href = 'styles/' + theme + '.css';
+            localStorage.setItem('theme', theme);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                changeTheme(savedTheme);
+                document.getElementById('theme').value = savedTheme;
+            }
+        });
+    </script>
 </head>
 <body>
     <h1>Адмін-панель</h1>
+    <form>
+        <label for="theme">Виберіть тему:</label>
+        <select name="theme" id="theme" onchange="changeTheme(this.value)">
+            <option value="__styles">Перший варіант</option>
+            <option value="___styles">Другий варіант</option>
+            <option value="_styles">Третій варіант</option>
+            <option value="styles">Основний варіант</option>
+        </select>
+    </form>
     <div class="header">
         <a href="add.php">Додати новий запис</a>
         <a href="logout.php" class="logout-button">Вийти</a>
