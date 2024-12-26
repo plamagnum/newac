@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Адмін-панель</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+</head>
+<body>
+    <h1>Адмін-панель</h1>
+    <div class="header">
+        <a href="add.php">Додати новий запис</a>
+        <a href="logout.php" class="logout-button">Вийти</a>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>hostname</th>
+                <th>portid</th>
+                <th>protocol</th>
+                <th>state</th>
+                <th>service</th>
+                <th>product</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php while($row = $result->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($row['id']); ?></td>
+                    <td><?php echo htmlspecialchars($row['hostname']); ?></td>
+                    <td><?php echo htmlspecialchars($row['portid']); ?></td>
+                    <td><?php echo htmlspecialchars($row['protocol']); ?></td>
+                    <td><?php echo htmlspecialchars($row['state']); ?></td>
+                    <td><?php echo htmlspecialchars($row['service']); ?></td>
+                    <td><?php echo htmlspecialchars($row['product']); ?></td>
+                    <td class="actions">
+                        <a href="edit.php?id=<?php echo $row['id']; ?>">Редагувати</a>
+                        <a href="delete.php?id=<?php echo $row['id']; ?>" 
+                           onclick="return confirm('Ви впевнені?')">Видалити</a>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
+</body>
+</html>
