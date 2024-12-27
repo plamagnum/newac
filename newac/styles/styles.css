@@ -37,6 +37,10 @@ header, footer {
     box-sizing: border-box; 
 }
 
+ul {
+    list-style: none;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;

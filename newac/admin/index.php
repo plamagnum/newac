@@ -7,7 +7,7 @@ checkAuth();
 $conn = getConnection();
 
 // Отримання всіх записів
-$sql = "SELECT * FROM scan_results ORDER BY id DESC";
+$sql = "SELECT * FROM scan_results ORDER BY id ASC";
 $result = $conn->query($sql);
 
 include 'index_view.html';

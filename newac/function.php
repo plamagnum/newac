@@ -14,10 +14,10 @@ function getDbConnection() {
     return $dbConn;
 }
 
-function insertScanResult($hostname, $portid, $protocol, $state, $service, $product) {
+function insertScanResult($address, $hostname, $portid, $protocol, $state, $service, $product, $version, $script_id, $script_output) {
     $dbConn = getDbConnection();
-    $stmt = $dbConn->prepare("INSERT INTO scan_results (hostname, portid, protocol, state, service, product) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param('ssssss', $hostname, $portid, $protocol, $state, $service, $product);
+    $stmt = $dbConn->prepare("INSERT INTO scan_results (address, hostname, portid, protocol, state, service, product, version, script_id, script_output) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('ssssssssss', $address, $hostname, $portid, $protocol, $state, $service, $product, $version, $script_id, $script_output);
     $stmt->execute();
     $stmt->close();
     $dbConn->close();

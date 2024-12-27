@@ -1,6 +1,7 @@
 /* Загальні стилі */
 body {
     font-family: Arial, sans-serif;
+    font-size: 12px;
     background-color: #f8f9fa;
     margin: 0;
     padding: 0;
@@ -90,7 +91,8 @@ table {
 
 th, td {
     border: 1px solid #dee2e6;
-    padding: 12px 15px;
+    /*padding: 12px 15px;*/
+    padding: 1px 1px;
     text-align: left;
 }
 

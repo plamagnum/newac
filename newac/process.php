@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['xmlfile'])) {
         $results = [];
 
         foreach ($xml->host as $host) {
+            $address = (string)$host->address['addr'];
             $hostname = (string)$host->hostnames->hostname['name'];
             foreach ($host->ports->port as $port) {
                 $portid = (string)$port['portid'];
@@ -20,10 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['xmlfile'])) {
                 $state = (string)$port->state['state'];
                 $service = (string)$port->service['name'];
                 $product = (string)$port->service['product'];
-                $results[] = "Host: $hostname, Port: $portid/$protocol, State: $state, Service: $service, Product: $product";
+                $version = (string)$port->version['version'];
+                $script_id = (string)$port->script['id'];
+                $script_output = (string)$port->script['output'];
+                $results[] = "Address: $address, Host: $hostname, Port: $portid/$protocol, State: $state, Service: $service, Product: $product, Version: $version, ID: $script_id, Output: $script_output";
 
                 // Insert data into database
-                insertScanResult($hostname, $portid, $protocol, $state, $service, $product);
+                insertScanResult($address, $hostname, $portid, $protocol, $state, $service, $product, $version, $script_id, $script_output);
             }
         }
 

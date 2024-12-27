@@ -40,12 +40,16 @@
         <thead>
             <tr>
                 <th>ID</th>
+                <th>address</th>
                 <th>hostname</th>
                 <th>portid</th>
                 <th>protocol</th>
                 <th>state</th>
                 <th>service</th>
                 <th>product</th>
+                <th>version</th>
+                <th>script id</th>
+                <th>output</th>
                 <th>Дії</th>
             </tr>
         </thead>
@@ -53,12 +57,16 @@
             <?php while($row = $result->fetch_assoc()): ?>
                 <tr>
                     <td><?php echo htmlspecialchars($row['id']); ?></td>
+                    <td><?php echo htmlspecialchars($row['address']); ?></td>
                     <td><?php echo htmlspecialchars($row['hostname']); ?></td>
                     <td><?php echo htmlspecialchars($row['portid']); ?></td>
                     <td><?php echo htmlspecialchars($row['protocol']); ?></td>
                     <td><?php echo htmlspecialchars($row['state']); ?></td>
                     <td><?php echo htmlspecialchars($row['service']); ?></td>
                     <td><?php echo htmlspecialchars($row['product']); ?></td>
+                    <td><?php echo htmlspecialchars($row['version']); ?></td>
+                    <td><?php echo htmlspecialchars($row['script_id']); ?></td>
+                    <td><?php echo htmlspecialchars($row['script_output']); ?></td>
                     <td class="actions">
                         <a href="edit.php?id=<?php echo $row['id']; ?>">Редагувати</a>
                         <a href="delete.php?id=<?php echo $row['id']; ?>" 

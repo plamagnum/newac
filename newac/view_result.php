@@ -25,6 +25,9 @@ $results = getHostResults($hostname);
                     <th>State</th>
                     <th>Service</th>
                     <th>Product</th>
+                    <th>Version</th>
+                    <th>Script ID</th>
+                    <th>Output</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,6 +40,9 @@ $results = getHostResults($hostname);
                                 <td>{$row['state']}</td>
                                 <td>{$row['service']}</td>
                                 <td>{$row['product']}</td>
+                                <td>{$row['version']}</td>
+                                <td>{$row['script_id']}</td>
+                                <td>{$row['script_output']}</td>
                               </tr>";
                     }
                 } else {
