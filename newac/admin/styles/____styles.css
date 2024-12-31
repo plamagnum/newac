@@ -26,98 +26,44 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Стилі для контейнера */
-.container {
-    display: flex;
-    width: 100%;
-    max-width: 1200px;
-}
-
-.left-column, .right-column {
-    flex: 1;
-    padding: 20px;
-}
-
-.left-column {
-    border-right: 1px solid #dee2e6;
-}
-
-.right-column {
-    padding-left: 20px;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-ul li {
-    margin-bottom: 10px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 12px;
-}
-
-th, td {
-    border: 1px solid #dee2e6;
-    padding: 8px 10px;
-    text-align: left;
-    background-color: #ffffff;
-}
-
-th {
-    background-color: #343a40;
-    color: #ffffff;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-/* Стилі для форми */
-.form-container {
-    width: 100%;
-    max-width: 500px;
+/* Стилі форми входу */
+.login-form {
+    width: 350px;
     padding: 20px;
     border: 1px solid #ced4da;
     border-radius: 8px;
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 30px;
+    text-align: center;
 }
 
-.form-container h2 {
+.login-form h2 {
     margin-bottom: 20px;
     color: #495057;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
     margin-bottom: 15px;
+    text-align: left;
 }
 
 .form-group label {
+    display: block;
     font-weight: bold;
-    margin-bottom: 5px;
     color: #495057;
 }
 
-.form-group input, .form-group select, .form-group textarea {
-    width: 100%;
+.form-group input {
+    width: calc(100% - 20px);
     padding: 8px 10px;
     border: 1px solid #ced4da;
     border-radius: 4px;
     box-sizing: border-box;
 }
 
-.form-group textarea {
-    min-height: 100px;
-    resize: vertical;
+.error {
+    color: red;
+    margin-bottom: 15px;
 }
 
 button {
@@ -135,14 +81,120 @@ button:hover {
     background-color: #0056b3;
 }
 
-.back-link {
+/* Стилі таблиці */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    position: relative;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 12px; /* Зменшений шрифт */
+}
+
+th, td {
+    border: 1px solid #dee2e6;
+    padding: 8px 10px; /* Зменшені внутрішні відступи */
+    text-align: left;
+    background-color: #ffffff;
+}
+
+th {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.actions a {
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.actions a:hover {
+    background-color: #0056b3;
+}
+
+.actions a.delete {
+    background-color: #dc3545;
+}
+
+.actions a.delete:hover {
+    background-color: #c82333;
+}
+
+/* Стилі для форм додавання та редагування */
+.form-container {
+    width: 500px;
+    padding: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.form-container h1 {
+    margin-bottom: 20px;
+    color: #495057;
+}
+
+.form-container .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-container .form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #495057;
+}
+
+.form-container .form-group input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.form-container button:hover {
+    background-color: #0056b3;
+}
+
+.form-container a {
     display: block;
     text-align: center;
     margin-top: 15px;
     color: #007bff;
 }
 
-.back-link:hover {
+.form-container a:hover {
     text-decoration: underline;
 }
 
@@ -152,7 +204,7 @@ button:hover {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 1200px;
+    max-width: 800px;
     margin-bottom: 20px;
 }
 
@@ -166,36 +218,4 @@ button:hover {
 
 .logout-button:hover {
     background-color: #c82333;
-}
-
-/* Стилі для вразливостей */
-.vulnerability-item {
-    border: 1px solid #dee2e6;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-
-.vulnerability-item h3 {
-    margin: 0 0 10px 0;
-}
-
-.vulnerability-item p {
-    margin: 5px 0;
-}
-
-.severity-low {
-    border-left: 5px solid #28a745;
-}
-
-.severity-medium {
-    border-left: 5px solid #ffc107;
-}
-
-.severity-high {
-    border-left: 5px solid #dc3545;
-}
-
-.severity-critical {
-    border-left: 5px solid #6f42c1;
 }

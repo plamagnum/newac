@@ -1,12 +1,12 @@
-Address: 185.69.152.82, Host: 3v3.com.ua, Port: 22/tcp, State: open, Service: ssh, Product: OpenSSH, Version: , ID: ssh-hostkey, Output: 
+Address: 185.69.152.82, Host: 3v3.com.ua, Port: 22/tcp, State: open, Service: ssh, Product: OpenSSH, Version: 6.0p1 Debian 4+deb7u4, ID: ssh-hostkey, Output: 
   1024 e8:e2:a7:24:e7:fe:9a:ca:5e:d9:9a:45:3f:18:03:ac (DSA)
   2048 52:56:53:77:ec:f5:8a:32:9b:b1:ca:8c:c7:b2:1a:46 (RSA)
-Address: 185.69.152.82, Host: 3v3.com.ua, Port: 25/tcp, State: open, Service: smtp, Product: Exim smtpd, Version: , ID: ssl-date, Output: 2024-12-27T14:59:24+00:00; -16s from scanner time.
-Address: 185.69.152.82, Host: 3v3.com.ua, Port: 53/tcp, State: open, Service: domain, Product: ISC BIND, Version: , ID: dns-nsid, Output: 
+Address: 185.69.152.82, Host: 3v3.com.ua, Port: 25/tcp, State: open, Service: smtp, Product: Exim smtpd, Version: 4.80, ID: ssl-date, Output: 2024-12-27T14:59:24+00:00; -16s from scanner time.
+Address: 185.69.152.82, Host: 3v3.com.ua, Port: 53/tcp, State: open, Service: domain, Product: ISC BIND, Version: 9.8.4-rpz2+rl005.12-P1, ID: dns-nsid, Output: 
   bind.version: 9.8.4-rpz2+rl005.12-P1
-Address: 185.69.152.82, Host: 3v3.com.ua, Port: 80/tcp, State: open, Service: http, Product: Apache httpd, Version: , ID: http-title, Output: Did not follow redirect to https://3v3.com.ua/
+Address: 185.69.152.82, Host: 3v3.com.ua, Port: 80/tcp, State: open, Service: http, Product: Apache httpd, Version: 2.2.22, ID: http-title, Output: Did not follow redirect to https://3v3.com.ua/
 Address: 185.69.152.82, Host: 3v3.com.ua, Port: 110/tcp, State: open, Service: pop3, Product: Dovecot pop3d, Version: , ID: ssl-date, Output: TLS randomness does not represent time
-Address: 185.69.152.82, Host: 3v3.com.ua, Port: 111/tcp, State: open, Service: rpcbind, Product: , Version: , ID: rpcinfo, Output: 
+Address: 185.69.152.82, Host: 3v3.com.ua, Port: 111/tcp, State: open, Service: rpcbind, Product: , Version: 2-4, ID: rpcinfo, Output: 
   program version    port/proto  service
   100000  2,3,4        111/tcp   rpcbind
   100000  2,3,4        111/udp   rpcbind
@@ -19,9 +19,9 @@ Address: 185.69.152.82, Host: 3v3.com.ua, Port: 111/tcp, State: open, Service: r
 
 Address: 185.69.152.82, Host: 3v3.com.ua, Port: 139/tcp, State: filtered, Service: netbios-ssn, Product: , Version: , ID: , Output: 
 Address: 185.69.152.82, Host: 3v3.com.ua, Port: 143/tcp, State: open, Service: imap, Product: Dovecot imapd, Version: , ID: ssl-date, Output: TLS randomness does not represent time
-Address: 185.69.152.82, Host: 3v3.com.ua, Port: 443/tcp, State: open, Service: http, Product: Apache httpd, Version: , ID: http-title, Output: 3V3 \x96 \xD0\xE0\xE4\xE8\xEE\xE4\xE5\xF2\xE0\xEB\xE8 \xE8 \xFD\xEB\xE5\xEA\xF2\xF0\xEE\xED\xED\xFB\xE5 \xEA\xEE\xEC\xEF\xEE\xED\xE5\xED\xF2\xFB \xEA\xF3\xEF\xE8\xF2\xFC 3v3.com.ua \xD5...
+Address: 185.69.152.82, Host: 3v3.com.ua, Port: 443/tcp, State: open, Service: http, Product: Apache httpd, Version: 2.2.22, ID: http-title, Output: 3V3 \x96 \xD0\xE0\xE4\xE8\xEE\xE4\xE5\xF2\xE0\xEB\xE8 \xE8 \xFD\xEB\xE5\xEA\xF2\xF0\xEE\xED\xED\xFB\xE5 \xEA\xEE\xEC\xEF\xEE\xED\xE5\xED\xF2\xFB \xEA\xF3\xEF\xE8\xF2\xFC 3v3.com.ua \xD5...
 Address: 185.69.152.82, Host: 3v3.com.ua, Port: 465/tcp, State: open, Service: smtps, Product: , Version: , ID: ssl-date, Output: 2024-12-27T14:59:24+00:00; -15s from scanner time.
-Address: 185.69.152.82, Host: 3v3.com.ua, Port: 587/tcp, State: open, Service: smtp, Product: Exim smtpd, Version: , ID: ssl-date, Output: 2024-12-27T14:59:24+00:00; -16s from scanner time.
+Address: 185.69.152.82, Host: 3v3.com.ua, Port: 587/tcp, State: open, Service: smtp, Product: Exim smtpd, Version: 4.80, ID: ssl-date, Output: 2024-12-27T14:59:24+00:00; -16s from scanner time.
 Address: 185.69.152.82, Host: 3v3.com.ua, Port: 993/tcp, State: open, Service: imaps, Product: , Version: , ID: ssl-cert, Output: Subject: commonName=debian7.vps-ukraine.com.ua/organizationName=Dovecot mail server
 Not valid before: 2015-03-26T09:03:18
 Not valid after:  2025-03-25T09:03:18
@@ -29,7 +29,7 @@ Address: 185.69.152.82, Host: 3v3.com.ua, Port: 995/tcp, State: open, Service: p
 Not valid before: 2015-03-26T09:03:18
 Not valid after:  2025-03-25T09:03:18
 Address: 185.69.152.82, Host: 3v3.com.ua, Port: 1500/tcp, State: open, Service: http, Product: ISPmanager SSL redirector, Version: , ID: http-title, Output: Site doesn't have a title (text/html; charset=UTF-8).
-Address: 185.69.152.82, Host: 3v3.com.ua, Port: 3306/tcp, State: open, Service: mysql, Product: MySQL, Version: , ID: mysql-info, Output: 
+Address: 185.69.152.82, Host: 3v3.com.ua, Port: 3306/tcp, State: open, Service: mysql, Product: MySQL, Version: 5.6.40-84.0, ID: mysql-info, Output: 
   Protocol: 10
   Version: 5.6.40-84.0
   Thread ID: 260406

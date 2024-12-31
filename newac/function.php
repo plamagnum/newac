@@ -23,6 +23,24 @@ function insertScanResult($address, $hostname, $portid, $protocol, $state, $serv
     $dbConn->close();
 }
 
+function insertHost($hostname, $address) {
+    $dbConn = getDbConnection();
+    $stmt = $dbConn->prepare("INSERT INTO hosts (hostname, address) VALUES (?, ?) ON DUPLICATE KEY UPDATE hostname=VALUES(hostname), address=VALUES(address)");
+    $stmt->bind_param('ss', $hostname, $address);
+    $stmt->execute();
+    $stmt->close();
+    $dbConn->close();
+}
+
+function insertPortData($portid, $protocol, $state, $service, $product, $version, $script_id, $script_output) {
+    $dbConn = getDbConnection();
+    $stmt = $dbConn->prepare("INSERT INTO data (portid, protocol, state, service, product, version, script_id, script_output) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('ssssssss', $portid, $protocol, $state, $service, $product, $version, $script_id, $script_output);
+    $stmt->execute();
+    $stmt->close();
+    $dbConn->close();
+}
+
 function getScanResults() {
     $dbConn = getDbConnection();
     $query = "SELECT DISTINCT hostname FROM scan_results";

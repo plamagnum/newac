@@ -3,7 +3,6 @@
 <head>
     <title>Адмін-панель</title>
     <meta charset="utf-8">
-    <!--<link rel="stylesheet" type="text/css" href="styles/styles.css">-->
     <link id="themeStylesheet" rel="stylesheet" type="text/css" href="styles/styles.css">
     <script>
         function changeTheme(theme) {
@@ -12,17 +11,102 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            var savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                changeTheme(savedTheme);
-                document.getElementById('theme').value = savedTheme;
-            }
+            const hostLinks = document.querySelectorAll('.host-link');
+            hostLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const hostname = this.dataset.hostname;
+                    loadHostData(hostname);
+                });
+            });
+            loadVulnerabilities();
         });
+
+        function loadHostData(hostname) {
+            fetch(`get_host_data.php?hostname=${hostname}`)
+                .then(response => response.json())
+                .then(data => {
+                    displayHostData(hostname, data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Не вдалося завантажити дані хоста');
+                });
+        }
+
+        function displayHostData(hostname, data) {
+            const hostDetails = document.getElementById('host-details');
+            const hostDataTable = document.getElementById('host-data');
+            const hostTitle = document.getElementById('host-title');
+
+            hostTitle.textContent = `Дані хоста: ${hostname}`;
+            hostDataTable.innerHTML = ''; // Очищення поточного вмісту таблиці
+
+            if (data.length > 0) {
+                data.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${item.portid}</td>
+                        <td>${item.protocol}</td>
+                        <td>${item.state}</td>
+                        <td>${item.service}</td>
+                        <td>${item.product}</td>
+                        <td>${item.version}</td>
+                        <td>${item.script_id}</td>
+                        <td>${item.script_output}</td>
+                    `;
+                    hostDataTable.appendChild(tr);
+                });
+            } else {
+                hostDataTable.innerHTML = '<tr><td colspan="8">No data available for this host.</td></tr>';
+            }
+        }
+
+        function loadVulnerabilities() {
+            fetch('get_vulnerabilities.php')
+                .then(response => {
+                    console.log('Response received:', response); // Debugging statement
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Data received:', data);
+                    populateVulnerabilityOptions(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Не вдалося завантажити вразливості');
+                });
+        }
+
+        function populateVulnerabilityOptions(vulnerabilities) {
+            const vulnerabilitySelect = document.getElementById('vulnerability-select');
+            vulnerabilities.forEach(v => {
+                const option = document.createElement('option');
+                option.value = v.id;
+                option.textContent = v.name;
+                vulnerabilitySelect.appendChild(option);
+            });
+        }
+
+        function addVulnerability() {
+            const vulnerabilityLink = document.getElementById('vulnerability-link').value;
+            const vulnerabilityId = document.getElementById('vulnerability-select').value;
+            const vulnerabilityTable = document.getElementById('vulnerability-table');
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><a href="${vulnerabilityLink}" target="_blank">${vulnerabilityLink}</a></td>
+                <td>${document.querySelector(`#vulnerability-select option[value="${vulnerabilityId}"]`).textContent}</td>
+            `;
+            vulnerabilityTable.appendChild(tr);
+        }
+
     </script>
 </head>
 <body>
-    <h1>Адмін-панель</h1>
-    <form>
+    <div class="header">
+        <h1>Адмін-панель</h1>
+        <form>
         <label for="theme">Виберіть тему:</label>
         <select name="theme" id="theme" onchange="changeTheme(this.value)">
             <option value="__styles">Перший варіант</option>
@@ -30,51 +114,85 @@
             <option value="_styles">Третій варіант</option>
             <option value="styles">Основний варіант</option>
         </select>
-    </form>
-    <div class="header">
-        <a href="add.php">Додати новий запис</a>
-        <a href="logout.php" class="logout-button">Вийти</a>
+        </form>
+        <div class="user-info">
+            <span>Користувач: <?php echo htmlspecialchars($currentUser['username']); ?></span>
+            <a href="logout.php" class="logout-button">Вийти</a>
+        </div>
     </div>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>address</th>
-                <th>hostname</th>
-                <th>portid</th>
-                <th>protocol</th>
-                <th>state</th>
-                <th>service</th>
-                <th>product</th>
-                <th>version</th>
-                <th>script id</th>
-                <th>output</th>
-                <th>Дії</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while($row = $result->fetch_assoc()): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($row['id']); ?></td>
-                    <td><?php echo htmlspecialchars($row['address']); ?></td>
-                    <td><?php echo htmlspecialchars($row['hostname']); ?></td>
-                    <td><?php echo htmlspecialchars($row['portid']); ?></td>
-                    <td><?php echo htmlspecialchars($row['protocol']); ?></td>
-                    <td><?php echo htmlspecialchars($row['state']); ?></td>
-                    <td><?php echo htmlspecialchars($row['service']); ?></td>
-                    <td><?php echo htmlspecialchars($row['product']); ?></td>
-                    <td><?php echo htmlspecialchars($row['version']); ?></td>
-                    <td><?php echo htmlspecialchars($row['script_id']); ?></td>
-                    <td><?php echo htmlspecialchars($row['script_output']); ?></td>
-                    <td class="actions">
-                        <a href="edit.php?id=<?php echo $row['id']; ?>">Редагувати</a>
-                        <a href="delete.php?id=<?php echo $row['id']; ?>" 
-                           onclick="return confirm('Ви впевнені?')">Видалити</a>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
+
+    <div class="container">
+        <div class="left-column">
+            <h2>Список хостів</h2>
+            <div class="host-actions">
+                <a href="add_host.php" class="button">Додати новий хост</a>
+            </div>
+            <ul class="hosts-list">
+                <?php foreach ($hosts as $host): ?>
+                    <li>
+                        <a href="#" class="host-link" data-hostname="<?php echo htmlspecialchars($host['hostname']); ?>">
+                            <?php echo htmlspecialchars($host['hostname']); ?>
+                            <span class="host-address"><?php echo htmlspecialchars($host['address']); ?></span>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+
+        <div class="right-column">
+            <div id="host-details">
+                <h2 id="host-title">Дані хоста</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Port ID</th>
+                            <th>Protocol</th>
+                            <th>State</th>
+                            <th>Service</th>
+                            <th>Product</th>
+                            <th>Version</th>
+                            <th>Script ID</th>
+                            <th>Script Output</th>
+                        </tr>
+                    </thead>
+                    <tbody id="host-data">
+                        <!-- Дані будуть завантажені через JavaScript -->
+                    </tbody>
+                </table>
+        <h2>Додати вразливість</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Посилання на вразливість</th>
+                            <th>Вразливість</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" id="vulnerability-link" placeholder="Введіть URL вразливості"></td>
+                            <td>
+                                <select id="vulnerability-select">
+                                    <!-- Вразливості будуть завантажені через JavaScript -->
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button onclick="addVulnerability()">Додати</button>
+                <h2>Вразливості хоста</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Посилання на вразливість</th>
+                            <th>Вразливість</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vulnerability-table">
+                        <!-- Вразливості будуть додані через JavaScript -->
+                    </tbody>
+                </table>        
+            </div>
+        </div>
+    </div>
 </body>
 </html>

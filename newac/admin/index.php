@@ -1,14 +1,20 @@
 <?php
-require_once 'auth.php';
-require_once 'config/db.php';
 
-checkAuth();
+header("Cache-Control: no-cache, must-revalidate");
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 
-$conn = getConnection();
+require_once 'includes/db.php';
+require_once 'includes/auth.php';
+require_once 'includes/functions.php';
 
-// Отримання всіх записів
-$sql = "SELECT * FROM scan_results ORDER BY id ASC";
-$result = $conn->query($sql);
+if (!isAuthenticated()) {
+    header('Location: login.php');
+    exit();
+}
+
+$hosts = getAllHosts($conn);
+$currentUser = getCurrentUser($conn);
+
 
 include 'index_view.html';
 ?>
