@@ -1,0 +1,10 @@
+*.cnf
+newac.sublime-project
+newac.sublime-workspace
+
+untitled.sublime-project
+untitled.sublime-workspace
+
+newac/*.xml
+newac/*.txt
+newac/*.sql
