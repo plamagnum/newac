@@ -1,9 +1,10 @@
 <?php
-require_once 'auth.php';
-require_once 'config/db.php';
+require_once 'includes/auth.php';
+require_once 'includes/db.php';
 
-checkAuth();
-
+if (!isAuthenticated()) {
+    jsonResponse(['error' => 'Unauthorized'], 401);
+}
 $conn = getConnection();
 $id = $_GET['id'] ?? 0;
 

@@ -26,7 +26,12 @@
             fetch(`get_host_data.php?hostname=${hostname}`)
                 .then(response => response.json())
                 .then(data => {
-                    displayHostData(hostname, data);
+                    if (data.hostData && data.vulnerabilities) {
+                        displayHostData(hostname, data);
+                    } else {
+                        console.error('Invalid data format', data);
+                        alert('Invalid data format received from server');
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -35,15 +40,15 @@
         }
 
         function displayHostData(hostname, data) {
-            const hostDetails = document.getElementById('host-details');
-            const hostDataTable = document.getElementById('host-data');
             const hostTitle = document.getElementById('host-title');
+            const hostDataTable = document.getElementById('host-data');
+            const vulnerabilityTable = document.getElementById('vulnerability-table');
 
             hostTitle.textContent = `Дані хоста: ${hostname}`;
             hostDataTable.innerHTML = ''; // Очищення поточного вмісту таблиці
 
-            if (data.length > 0) {
-                data.forEach(item => {
+            if (data.hostData.length > 0) {
+                data.hostData.forEach(item => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>${item.portid}</td>
@@ -59,6 +64,22 @@
                 });
             } else {
                 hostDataTable.innerHTML = '<tr><td colspan="8">No data available for this host.</td></tr>';
+            }
+
+            vulnerabilityTable.innerHTML = ''; // Очищення поточного вмісту таблиці вразливостей
+
+            if (data.vulnerabilities.length > 0) {
+                data.vulnerabilities.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><a href="${item.vulnerability_link}" target="_blank">${item.vulnerability_link}</a></td>
+                        <td>${item.vulnerability_name}</td>
+                        <td>${item.description}</td>
+                    `;
+                    vulnerabilityTable.appendChild(tr);
+                });
+            } else {
+                vulnerabilityTable.innerHTML = '<tr><td colspan="2">No vulnerabilities available for this host.</td></tr>';
             }
         }
 
@@ -91,14 +112,42 @@
         function addVulnerability() {
             const vulnerabilityLink = document.getElementById('vulnerability-link').value;
             const vulnerabilityId = document.getElementById('vulnerability-select').value;
-            const vulnerabilityTable = document.getElementById('vulnerability-table');
+            const vulnerabilityDescription = document.getElementById('vulnerability-description').value;
+            const hostTitle = document.getElementById('host-title').textContent;
 
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><a href="${vulnerabilityLink}" target="_blank">${vulnerabilityLink}</a></td>
-                <td>${document.querySelector(`#vulnerability-select option[value="${vulnerabilityId}"]`).textContent}</td>
-            `;
-            vulnerabilityTable.appendChild(tr);
+            const hostname = hostTitle.replace('Дані хоста: ', '');
+
+
+            fetch('add_vuln.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    hostname: hostname,
+                    vulnerability_id: vulnerabilityId,
+                    vulnerability_link: vulnerabilityLink,
+                    description: vulnerabilityDescription
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    loadHostData(hostname); // Reload host data to show the new vulnerability
+                } else {
+                    alert('Failed to add vulnerability');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to add vulnerability');
+            });
+        }
+
+        function confirmDelete(hostname, id) {
+            if (confirm(`Ви впевнені, що хочете видалити хост ${hostname}?`)) {
+                window.location.href = `delete.php?hostname=${hostname}`;
+            }
         }
 
     </script>
@@ -134,6 +183,8 @@
                             <?php echo htmlspecialchars($host['hostname']); ?>
                             <span class="host-address"><?php echo htmlspecialchars($host['address']); ?></span>
                         </a>
+                        <a href="edit.php?id=<?php echo $host['id']; ?>" class="button edit-button">Редагувати</a>
+                        <button onclick="confirmDelete('<?php echo htmlspecialchars($host['hostname']); ?>', <?php echo $host['id']; ?>)" class="button delete-button">Видалити</button>
                     </li>
                 <?php endforeach; ?>
             </ul>
@@ -159,12 +210,27 @@
                         <!-- Дані будуть завантажені через JavaScript -->
                     </tbody>
                 </table>
-        <h2>Додати вразливість</h2>
+
+                <h2>Вразливості хоста</h2>
                 <table>
                     <thead>
                         <tr>
                             <th>Посилання на вразливість</th>
                             <th>Вразливість</th>
+                            <th>Опис</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vulnerability-table">
+                        <!-- Вразливості будуть додані через JavaScript -->
+                    </tbody>
+                </table>
+                            <h2>Додати вразливість</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Посилання на вразливість</th>
+                            <th>Вразливість</th>
+                            <th>Опис</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -175,22 +241,11 @@
                                     <!-- Вразливості будуть завантажені через JavaScript -->
                                 </select>
                             </td>
+                            <td><input type="text" id="vulnerability-description" placeholder="Введіть опис вразливості"></td>
                         </tr>
                     </tbody>
                 </table>
-                <button onclick="addVulnerability()">Додати</button>
-                <h2>Вразливості хоста</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Посилання на вразливість</th>
-                            <th>Вразливість</th>
-                        </tr>
-                    </thead>
-                    <tbody id="vulnerability-table">
-                        <!-- Вразливості будуть додані через JavaScript -->
-                    </tbody>
-                </table>        
+                <button onclick="addVulnerability()">Додати</button>        
             </div>
         </div>
     </div>
