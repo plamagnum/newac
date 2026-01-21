@@ -71,7 +71,12 @@
                     hostDataTable.appendChild(tr);
                 });
             } else {
-                hostDataTable.innerHTML = '<tr><td colspan="8">No data available for this host.</td></tr>';
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.setAttribute('colspan', '8');
+                td.textContent = 'No data available for this host.';
+                tr.appendChild(td);
+                hostDataTable.appendChild(tr);
             }
 
             vulnerabilityTable.innerHTML = ''; // Очищення поточного вмісту таблиці вразливостей
@@ -88,7 +93,12 @@
                     vulnerabilityTable.appendChild(tr);
                 });
             } else {
-                vulnerabilityTable.innerHTML = '<tr><td colspan="3">No vulnerabilities available for this host.</td></tr>';
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.setAttribute('colspan', '3');
+                td.textContent = 'No vulnerabilities available for this host.';
+                tr.appendChild(td);
+                vulnerabilityTable.appendChild(tr);
             }
         }
 
