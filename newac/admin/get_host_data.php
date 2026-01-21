@@ -5,6 +5,7 @@ require_once 'includes/functions.php';
 
 if (!isAuthenticated()) {
     jsonResponse(['error' => 'Unauthorized'], 401);
+    return; // Explicit return for code clarity (jsonResponse already calls exit)
 }
 if (isset($_GET['hostname'])) {
     $hostname = $_GET['hostname'];

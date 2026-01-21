@@ -35,7 +35,7 @@ $results = getScanResults();
             <?php
             if (!empty($results)) {
                 foreach ($results as $hostname) {
-                    echo "<li><a href='view_result.php?hostname={$hostname}'>{$hostname}</a></li>";
+                    echo "<li><a href='view_result.php?hostname=" . urlencode($hostname) . "'>" . htmlspecialchars($hostname) . "</a></li>";
                 }
             } else {
                 echo "<li>No results found</li>";

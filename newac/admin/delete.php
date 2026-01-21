@@ -1,9 +1,11 @@
 <?php
 require_once 'includes/auth.php';
 require_once 'includes/db.php';
+require_once 'includes/functions.php';
 
 if (!isAuthenticated()) {
     jsonResponse(['error' => 'Unauthorized'], 401);
+    return; // Explicit return for code clarity (jsonResponse already calls exit)
 }
 $conn = getConnection();
 
