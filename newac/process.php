@@ -36,7 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['xmlfile'])) {
 
     if (move_uploaded_file($_FILES['xmlfile']['tmp_name'], $uploadFile)) {
         // Disable external entity loading for security (prevent XXE attacks)
-        libxml_disable_entity_loader(true);
+        // Use LIBXML_NONET to prevent network access during XML parsing
+        // Note: libxml_disable_entity_loader() is deprecated in PHP 8.0+
+        if (PHP_VERSION_ID < 80000) {
+            libxml_disable_entity_loader(true);
+        }
         $xml = simplexml_load_file($uploadFile, 'SimpleXMLElement', LIBXML_NONET);
         
         if ($xml === false) {

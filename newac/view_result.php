@@ -2,7 +2,7 @@
 require_once 'function.php';
 
 // Validate and sanitize the hostname parameter
-$hostname = isset($_GET['hostname']) ? filter_var($_GET['hostname'], FILTER_SANITIZE_STRING) : '';
+$hostname = isset($_GET['hostname']) ? htmlspecialchars(trim($_GET['hostname']), ENT_QUOTES, 'UTF-8') : '';
 if (empty($hostname)) {
     header('Location: index.php');
     exit();
