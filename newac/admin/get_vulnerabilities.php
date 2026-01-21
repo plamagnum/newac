@@ -1,8 +1,11 @@
 <?php
 require_once 'includes/auth.php';
 require_once 'includes/db.php';
+require_once 'includes/functions.php';
 
-isAuthenticated();
+if (!isAuthenticated()) {
+    jsonResponse(['error' => 'Unauthorized'], 401);
+}
 
 $conn = getConnection();
 $sql = "SELECT id, name FROM vulnerabilities";

@@ -23,7 +23,6 @@ function verifyUser($conn, $username, $password) {
 
 // Функції для роботи з хостами
 function getAllHosts($conn) {
-    $conn = getConnection();
     $result = $conn->query("SELECT * FROM hosts ORDER BY hostname");
     $hosts = [];
     while ($row = $result->fetch_assoc()) {

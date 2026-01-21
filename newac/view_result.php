@@ -1,7 +1,12 @@
 <?php
 require_once 'function.php';
 
-$hostname = $_GET['hostname'];
+// Validate and sanitize the hostname parameter
+$hostname = isset($_GET['hostname']) ? filter_var($_GET['hostname'], FILTER_SANITIZE_STRING) : '';
+if (empty($hostname)) {
+    header('Location: index.php');
+    exit();
+}
 $results = getHostResults($hostname);
 ?>
 <!DOCTYPE html>
@@ -35,18 +40,18 @@ $results = getHostResults($hostname);
                 if (!empty($results)) {
                     foreach ($results as $row) {
                         echo "<tr>
-                                <td>{$row['portid']}</td>
-                                <td>{$row['protocol']}</td>
-                                <td>{$row['state']}</td>
-                                <td>{$row['service']}</td>
-                                <td>{$row['product']}</td>
-                                <td>{$row['version']}</td>
-                                <td>{$row['script_id']}</td>
-                                <td>{$row['script_output']}</td>
+                                <td>" . htmlspecialchars($row['portid']) . "</td>
+                                <td>" . htmlspecialchars($row['protocol']) . "</td>
+                                <td>" . htmlspecialchars($row['state']) . "</td>
+                                <td>" . htmlspecialchars($row['service']) . "</td>
+                                <td>" . htmlspecialchars($row['product']) . "</td>
+                                <td>" . htmlspecialchars($row['version']) . "</td>
+                                <td>" . htmlspecialchars($row['script_id']) . "</td>
+                                <td>" . htmlspecialchars($row['script_output']) . "</td>
                               </tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='5'>No results found for host: " . htmlspecialchars($hostname) . "</td></tr>";
+                    echo "<tr><td colspan='8'>No results found for host: " . htmlspecialchars($hostname) . "</td></tr>";
                 }
                 ?>
             </tbody>

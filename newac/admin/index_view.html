@@ -39,6 +39,14 @@
                 });
         }
 
+        // Helper function to escape HTML to prevent XSS
+        function escapeHtml(text) {
+            if (text === null || text === undefined) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
         function displayHostData(hostname, data) {
             const hostTitle = document.getElementById('host-title');
             const hostDataTable = document.getElementById('host-data');
@@ -51,14 +59,14 @@
                 data.hostData.forEach(item => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td>${item.portid}</td>
-                        <td>${item.protocol}</td>
-                        <td>${item.state}</td>
-                        <td>${item.service}</td>
-                        <td>${item.product}</td>
-                        <td>${item.version}</td>
-                        <td>${item.script_id}</td>
-                        <td>${item.script_output}</td>
+                        <td>${escapeHtml(item.portid)}</td>
+                        <td>${escapeHtml(item.protocol)}</td>
+                        <td>${escapeHtml(item.state)}</td>
+                        <td>${escapeHtml(item.service)}</td>
+                        <td>${escapeHtml(item.product)}</td>
+                        <td>${escapeHtml(item.version)}</td>
+                        <td>${escapeHtml(item.script_id)}</td>
+                        <td>${escapeHtml(item.script_output)}</td>
                     `;
                     hostDataTable.appendChild(tr);
                 });
@@ -71,15 +79,16 @@
             if (data.vulnerabilities.length > 0) {
                 data.vulnerabilities.forEach(item => {
                     const tr = document.createElement('tr');
+                    const safeLink = escapeHtml(item.vulnerability_link);
                     tr.innerHTML = `
-                        <td><a href="${item.vulnerability_link}" target="_blank">${item.vulnerability_link}</a></td>
-                        <td>${item.vulnerability_name}</td>
-                        <td>${item.description}</td>
+                        <td><a href="${safeLink}" target="_blank" rel="noopener noreferrer">${safeLink}</a></td>
+                        <td>${escapeHtml(item.vulnerability_name)}</td>
+                        <td>${escapeHtml(item.description)}</td>
                     `;
                     vulnerabilityTable.appendChild(tr);
                 });
             } else {
-                vulnerabilityTable.innerHTML = '<tr><td colspan="2">No vulnerabilities available for this host.</td></tr>';
+                vulnerabilityTable.innerHTML = '<tr><td colspan="3">No vulnerabilities available for this host.</td></tr>';
             }
         }
 
